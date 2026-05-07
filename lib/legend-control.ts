@@ -194,7 +194,7 @@ export default class MapboxLegendControl implements IControl
 
             var label2 = document.createElement('label');
             if (this.targets && this.targets[layer.id]) {
-                label2.textContent = this.targets[layer.id]['name'];
+                label2.textContent = this.targets[layer.id]['label'];
             } else {
                 label2.textContent = layer.id;
             }
@@ -235,7 +235,7 @@ export default class MapboxLegendControl implements IControl
                     })
                     var label2 = document.createElement('label');
                     if (this.targets && this.targets[layer.id]) {
-                        label2.textContent = this.targets[layer.id]['name'];
+                        label2.textContent = this.targets[layer.id]['label'];
                     } else {
                         label2.textContent = layer.id;
                     }
@@ -252,7 +252,7 @@ export default class MapboxLegendControl implements IControl
         td2.className='legend-table-td';
         let label1 = document.createElement('label');
         if (this.targets && this.targets[layer.id]) {
-            label1.textContent = this.targets[layer.id]['name'];
+            label1.textContent = this.targets[layer.id]['label'];
         } else {
             label1.textContent = layer.id;
         }

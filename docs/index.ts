@@ -21,29 +21,79 @@ import '../css/styles.css';
         // TODO: object allows name, raster/vector (affects styling), color ramp image, color ramp units
         // TODO: define our own custom layers, e.g. from geojson
         const targets = {
-            'radar-layer': 'Koppen-Geiger Climate Zones',
-            'pipeline': 'Pipeline',
-            'pipeline_annotation': 'Pipeline Label',
-            'meter': 'Water Meter',
-            'flow meter': 'Flow Meter',
-            'valve': 'Valve',
-            'firehydrant': 'Fire Hydrant',
-            'washout': 'Washout',
-            'tank': 'Tank',
-            'tank_annotation': 'Tank Label',
-            'wtp': 'WTP',
-            'wtp_annotation': 'WTP Label',
-            'intake': 'Intake',
-            'intake_annotation': 'Intake Label',
-            'parcels': 'Parcels',
-            'parcels_annotation': 'Parcels Label',
-            'village': 'Village',
-            'village_annotation': 'Village Label',
-            'dma': 'DMA',
-            'dma-annotation': 'DMA Label',
-            'contour-line': 'Countour',
-            'contour-label': 'Contour Label',
-            'hillshade': 'Hillshade',
+            'radar-layer': {
+                'label': 'Koppen-Geiger Climate Zones',
+                'rangeMin': 0,
+                'rangeMax': 30,
+                'colorRamp': '{"0":[75,171,57,50],"35":[0,143,95,255],"158":[0,100,110,255],"229":[28,58,109,255],"255":[39,0,59,255]}',
+                'units': null
+            },
+            'pipeline': {
+                'label': 'Pipeline',
+            },
+            'pipeline_annotation': {
+                'label': 'Pipeline Label',
+            },
+            'meter': {
+                'label': 'Water Meter',
+            },
+            'flow meter': {
+                'label': 'Flow Meter',
+            },
+            'valve': {
+                'label': 'Valve',
+            },
+            'firehydrant': {
+                'label': 'Fire Hydrant',
+            },
+            'washout': {
+                'label': 'Washout',
+            },
+            'tank': {
+                'label': 'Tank',
+            },
+            'tank_annotation': {
+                'label': 'Tank Label',
+            },
+            'wtp': {
+                'label': 'WTP',
+            },
+            'wtp_annotation': {
+                'label': 'WTP Label',
+            },
+            'intake': {
+                'label': 'Intake',
+            },
+            'intake_annotation': {
+                'label': 'Intake Label',
+            },
+            'parcels': {
+                'label': 'Parcels',
+            },
+            'parcels_annotation': {
+                'label': 'Parcels Label',
+            },
+            'village': {
+                'label': 'Village',
+            },
+            'village_annotation': {
+                'label': 'Village Label',
+            },
+            'dma': {
+                'label': 'DMA',
+            },
+            'dma-annotation': {
+                'label': 'DMA Label',
+            },
+            'contour-line': {
+                'label': 'Countour',
+            },
+            'contour-label': {
+                'label': 'Contour Label',
+            },
+            'hillshade': {
+                'label': 'Hillshade',
+            },
         };
         // add legend control without checkbox, and it will be hide as default
         let options : LegendOptions = {
