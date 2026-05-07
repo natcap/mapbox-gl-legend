@@ -180,7 +180,11 @@ export default class MapboxLegendControl implements IControl
             iconSvg.appendChild(iconPath2);
 
             var label2 = document.createElement('label');
-            label2.textContent = (this.targets && this.targets[layer.id])?this.targets[layer.id]:layer.id;
+            if (this.targets && this.targets[layer.id]) {
+                label2.textContent = this.targets[layer.id]['name'];
+            } else {
+                label2.textContent = layer.id;
+            }
             td1.appendChild(iconSvg)
 
         } else {
@@ -217,7 +221,11 @@ export default class MapboxLegendControl implements IControl
                         svg.appendChild(group);
                     })
                     var label2 = document.createElement('label');
-                    label2.textContent = (this.targets && this.targets[layer.id])?this.targets[layer.id]:layer.id;
+                    if (this.targets && this.targets[layer.id]) {
+                        label2.textContent = this.targets[layer.id]['name'];
+                    } else {
+                        label2.textContent = layer.id;
+                    }
                     td1.appendChild(svg)
                     break;
                 default:
@@ -225,12 +233,16 @@ export default class MapboxLegendControl implements IControl
                     return;
             }
         }
-        
+
         // create layer label
         var td2 = document.createElement('TD');
         td2.className='legend-table-td';
         let label1 = document.createElement('label');
-        label1.textContent = (this.targets && this.targets[layer.id])?this.targets[layer.id]:layer.id;
+        if (this.targets && this.targets[layer.id]) {
+            label1.textContent = this.targets[layer.id]['name'];
+        } else {
+            label1.textContent = layer.id;
+        }
         td2.appendChild(label1)
 
         // tr.appendChild(td0);
