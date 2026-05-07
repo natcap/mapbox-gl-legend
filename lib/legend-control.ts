@@ -100,7 +100,7 @@ export default class MapboxLegendControl implements IControl
         if (!visibility){
             checklayer.checked = true;
         }else{
-            let _checked = true;       
+            let _checked = true;
             switch(visibility){
                 case 'none':
                     _checked = false;
@@ -120,7 +120,7 @@ export default class MapboxLegendControl implements IControl
             const _checked = e.target?.checked;
             this_.changeLayerVisibility(_id, _checked);
         });
-        td.appendChild(checklayer) 
+        td.appendChild(checklayer)
 
         return td;
     }
@@ -195,14 +195,14 @@ export default class MapboxLegendControl implements IControl
                         img.src = symbol.attributes.style.backgroundImage.replace('url(','').replace(')','');
                         img.alt = layer.id;
                         img.style.cssText = `height: 17px;`
-                        td1.appendChild(img)      
+                        td1.appendChild(img)
                     }
                     td1.style.backgroundColor = symbol.attributes.style.backgroundColor;
                     td1.style.backgroundPosition = symbol.attributes.style.backgroundPosition;
                     td1.style.backgroundSize = symbol.attributes.style.backgroundSize;
                     td1.style.backgroundRepeat = symbol.attributes.style.backgroundRepeat;
                     td1.style.opacity = symbol.attributes.style.opacity;
-    
+
                     break;
                 case 'svg':
                     let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -274,7 +274,7 @@ export default class MapboxLegendControl implements IControl
                 this.legendTable.className = 'legend-table';
                 this.legendContainer.appendChild(this.legendTable)
             }
-            
+
             while (this.legendTable.firstChild) {
                 this.legendTable.removeChild(this.legendTable.firstChild);
             }
@@ -288,9 +288,9 @@ export default class MapboxLegendControl implements IControl
                     visibleLayers[l.id]=l
                 };
 
-                if ((this.targets === undefined) 
+                if ((this.targets === undefined)
                     // if target option is undefined, show all layers.
-                    || (this.targets && Object.keys(this.targets).length === 0) 
+                    || (this.targets && Object.keys(this.targets).length === 0)
                     // if no layer is specified, show all layers.
                     || (this.targets && Object.keys(this.targets).map((id:string)=>{return id;}).includes(l.id))
                     // if layers are speficied, only show these specific layers.
@@ -327,7 +327,7 @@ export default class MapboxLegendControl implements IControl
         document.addEventListener("click", this.onDocumentClick);
         this.controlContainer.appendChild(this.legendButton);
         this.controlContainer.appendChild(this.legendContainer);
-        
+
         this.closeButton = document.createElement("button");
         this.closeButton.textContent = "x";
         this.closeButton.classList.add("mapboxgl-legend-close-button");
@@ -389,7 +389,7 @@ export default class MapboxLegendControl implements IControl
             }
         }
         this.map.on('idle', afterLoadListener);
-        
+
         if (this.options && this.options.showDefault == true){
             this.legendContainer.style.display = "block";
             this.legendButton.style.display = "none";
