@@ -29,31 +29,31 @@ npm i @watergis/mapbox-gl-legend --save
 map.on('load', function() {
     const targets = {
         'pipeline': 'Pipeline',
-        'pipeline_annotation': 'Pipeline Label', 
+        'pipeline_annotation': 'Pipeline Label',
         'meter': 'Water Meter',
-        'flow meter': 'Flow Meter', 
-        'valve': 'Valve', 
-        'firehydrant': 'Fire Hydrant', 
+        'flow meter': 'Flow Meter',
+        'valve': 'Valve',
+        'firehydrant': 'Fire Hydrant',
         'washout': 'Washout',
-        'tank': 'Tank', 
-        'tank_annotation': 'Tank Label', 
-        'wtp': 'WTP', 
-        'wtp_annotation': 'WTP Label', 
-        'intake': 'Intake', 
-        'intake_annotation': 'Intake Label', 
-        'parcels': 'Parcels', 
-        'parcels_annotation': 'Parcels Label', 
-        'village': 'Village', 
-        'village_annotation': 'Village Label', 
+        'tank': 'Tank',
+        'tank_annotation': 'Tank Label',
+        'wtp': 'WTP',
+        'wtp_annotation': 'WTP Label',
+        'intake': 'Intake',
+        'intake_annotation': 'Intake Label',
+        'parcels': 'Parcels',
+        'parcels_annotation': 'Parcels Label',
+        'village': 'Village',
+        'village_annotation': 'Village Label',
         'dma': 'DMA',
-        'dma-annotation': 'DMA Label', 
+        'dma-annotation': 'DMA Label',
         'contour-line': 'Countour',
         'contour-label': 'Contour Label',
         'hillshade': 'Hillshade'
     };
     map.addControl(new MapboxLegendControl(targets, {
-        showDefault: false, 
-        showCheckbox: false, 
+        showDefault: false,
+        showCheckbox: false,
         onlyRendered: true,
         reverseOrder: true
     }), 'top-right');
@@ -74,8 +74,9 @@ See [demo](https://watergis.github.io/mapbox-gl-legend/#12/-1.08551/35.87063).
 ## Test:
 
 ```
+npm install mapbox-gl
 npm run build
-npm start
+npm run dev
 ```
 
 open [http://localhost:8080](http://localhost:8080).
@@ -92,24 +93,24 @@ const map = new mapboxgl.Map();
 map.on('load', function() {
 const targets = {
   'pipeline': 'Pipeline',
-  'pipeline_annotation': 'Pipeline Label', 
+  'pipeline_annotation': 'Pipeline Label',
   'meter': 'Water Meter',
-  'flow meter': 'Flow Meter', 
-  'valve': 'Valve', 
-  'firehydrant': 'Fire Hydrant', 
+  'flow meter': 'Flow Meter',
+  'valve': 'Valve',
+  'firehydrant': 'Fire Hydrant',
   'washout': 'Washout',
-  'tank': 'Tank', 
-  'tank_annotation': 'Tank Label', 
-  'wtp': 'WTP', 
-  'wtp_annotation': 'WTP Label', 
-  'intake': 'Intake', 
-  'intake_annotation': 'Intake Label', 
-  'parcels': 'Parcels', 
-  'parcels_annotation': 'Parcels Label', 
-  'village': 'Village', 
-  'village_annotation': 'Village Label', 
+  'tank': 'Tank',
+  'tank_annotation': 'Tank Label',
+  'wtp': 'WTP',
+  'wtp_annotation': 'WTP Label',
+  'intake': 'Intake',
+  'intake_annotation': 'Intake Label',
+  'parcels': 'Parcels',
+  'parcels_annotation': 'Parcels Label',
+  'village': 'Village',
+  'village_annotation': 'Village Label',
   'dma': 'DMA',
-  'dma_annotation': 'DMA Label', 
+  'dma_annotation': 'DMA Label',
 };
 
 // add legend control without checkbox, and it will be hide as default
@@ -140,15 +141,15 @@ Specify your layers which you want to add the legend by the control.
   - false: the checkbox will not be added as default
   - default value is `true` if you don't specify the option.
 - reverseOrder
-  - true: layers will be ordered from top. 
-  - false: layers will be ordered from bottom. 
+  - true: layers will be ordered from top.
+  - false: layers will be ordered from bottom.
   - default value is `true` if you don't spefify the option.
 - onlyRendered
-  - true: only rendered layers will be shown on legend as default. 
-  - false: all layers' legend will be shown as default. 
+  - true: only rendered layers will be shown on legend as default.
+  - false: all layers' legend will be shown as default.
   - default value will be true.
 - title
-  - specify the title of the legend. 
+  - specify the title of the legend.
   - default value is `Legend` if you don't specify the option.
 
 ## How to release
