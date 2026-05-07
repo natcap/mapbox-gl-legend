@@ -12,6 +12,19 @@ export type LegendOptions = {
     title?: string;
 }
 
+export type RasterLayerOpts = {
+    label: string;
+    // type (raster, vector, etc) is inferred from mapbox data
+    rangeMin: number;
+    rangeMax: number;  // TODO: will this work for inf/nan?
+    colorRamp: string;  // the custom color ramp passed to titiler
+    units: string;
+}
+
+export type VectorLayerOpts = {
+    label: string;
+}
+
 /**
  * Mapbox GL Legend Control.
  * @param {Object} targets - Object of layer.id and title
@@ -30,7 +43,7 @@ export default class MapboxLegendControl implements IControl
     private legendButton: HTMLButtonElement;
     private closeButton: HTMLButtonElement;
     private legendTable: HTMLElement;
-    private targets: { [key: string]: string };
+    private targets: { [key: string]: RasterLayerOpts|VectorLayerOpts};
     private uncheckedLayers: { [key: string]: string } = {};
     private onlyRendered: boolean;
     private options: LegendOptions = {
@@ -46,7 +59,7 @@ export default class MapboxLegendControl implements IControl
         json: JSON
     };
 
-    constructor(targets:{ [key: string]: string }, options: LegendOptions)
+    constructor(targets:{ [key: string]: RasterLayerOpts|VectorLayerOpts}, options: LegendOptions)
     {
       this.targets = targets;
       if (options){
