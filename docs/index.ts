@@ -7,7 +7,9 @@ import '../css/styles.css';
     const map = new mapboxgl.Map({
         container: 'map',
         // style: 'mapbox://styles/mapbox/streets-v11',
-        style:'https://narwassco.github.io/mapbox-stylefiles/unvt/style.json',
+        // This style vector is defining all of the layers.
+        //style:'https://narwassco.github.io/mapbox-stylefiles/unvt/style.json',
+        style: './style.json',
         center: [35.87063, -1.08551],
         zoom: 12,
         hash:true,
@@ -15,34 +17,38 @@ import '../css/styles.css';
     map.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
     map.on('load', function() {
+        // TODO: key maps to object
+        // TODO: object allows name, raster/vector (affects styling), color ramp image, color ramp units
+        // TODO: define our own custom layers, e.g. from geojson
         const targets = {
+            'radar-layer': 'Koppen-Geiger Climate Zones',
             'pipeline': 'Pipeline',
-            'pipeline_annotation': 'Pipeline Label', 
+            'pipeline_annotation': 'Pipeline Label',
             'meter': 'Water Meter',
-            'flow meter': 'Flow Meter', 
-            'valve': 'Valve', 
-            'firehydrant': 'Fire Hydrant', 
+            'flow meter': 'Flow Meter',
+            'valve': 'Valve',
+            'firehydrant': 'Fire Hydrant',
             'washout': 'Washout',
-            'tank': 'Tank', 
-            'tank_annotation': 'Tank Label', 
-            'wtp': 'WTP', 
-            'wtp_annotation': 'WTP Label', 
-            'intake': 'Intake', 
-            'intake_annotation': 'Intake Label', 
-            'parcels': 'Parcels', 
-            'parcels_annotation': 'Parcels Label', 
-            'village': 'Village', 
-            'village_annotation': 'Village Label', 
+            'tank': 'Tank',
+            'tank_annotation': 'Tank Label',
+            'wtp': 'WTP',
+            'wtp_annotation': 'WTP Label',
+            'intake': 'Intake',
+            'intake_annotation': 'Intake Label',
+            'parcels': 'Parcels',
+            'parcels_annotation': 'Parcels Label',
+            'village': 'Village',
+            'village_annotation': 'Village Label',
             'dma': 'DMA',
-            'dma-annotation': 'DMA Label', 
+            'dma-annotation': 'DMA Label',
             'contour-line': 'Countour',
             'contour-label': 'Contour Label',
-            'hillshade': 'Hillshade'
+            'hillshade': 'Hillshade',
         };
         // add legend control without checkbox, and it will be hide as default
         let options : LegendOptions = {
-            showDefault: false, 
-            showCheckbox: false, 
+            showDefault: false,
+            showCheckbox: false,
             onlyRendered: true,
             reverseOrder: true
         }
@@ -50,8 +56,8 @@ import '../css/styles.css';
 
         // add legend control with checkbox, and it will be shown as default
         options  = {
-            showDefault: true, 
-            showCheckbox: true, 
+            showDefault: true,
+            showCheckbox: true,
             onlyRendered: true,
             reverseOrder: false
         }
@@ -59,8 +65,8 @@ import '../css/styles.css';
 
         // add legend control with all layers, and it reverse layer order
         options  = {
-            showDefault: true, 
-            showCheckbox: true, 
+            showDefault: true,
+            showCheckbox: true,
             onlyRendered: false,
             reverseOrder: true
         }
@@ -68,8 +74,8 @@ import '../css/styles.css';
 
         // add legent control with custom title
         options = {
-            showDefault: true, 
-            showCheckbox: true, 
+            showDefault: true,
+            showCheckbox: true,
             onlyRendered: true,
             reverseOrder: false,
             title: 'Custom Legend'
