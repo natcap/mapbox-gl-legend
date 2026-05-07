@@ -12,6 +12,7 @@
       "moduleResolution": "node",
       "noImplicitThis": true,
       "noUnusedLocals": true,
+      "rootDir": ".",
       "outDir": "./dist/",
       "preserveConstEnums": true,
       "removeComments": true,
