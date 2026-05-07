@@ -77,18 +77,20 @@ export default class MapboxLegendControl implements IControl
 
     private changeLayerVisibility(layer_id: string, checked)
     {
-        if (checked) {
-            if (this.uncheckedLayers[layer_id]) delete this.uncheckedLayers[layer_id];
-            this.map?.setLayoutProperty(layer_id, 'visibility', 'visible');
-        }else{
-            this.uncheckedLayers[layer_id]=layer_id;
-            this.map?.setLayoutProperty(layer_id, 'visibility', 'none');
-        }
-        const checkboxes: NodeListOf<HTMLElement> = document.getElementsByName(layer_id);
-        for (let i in checkboxes){
-            if (typeof checkboxes[i] === 'number') continue;
-            // @ts-ignore
-            checkboxes[i].checked = checked;
+        if (this.map?.getLayer(layer_id)) {
+            if (checked) {
+                if (this.uncheckedLayers[layer_id]) delete this.uncheckedLayers[layer_id];
+                this.map?.setLayoutProperty(layer_id, 'visibility', 'visible');
+            }else{
+                this.uncheckedLayers[layer_id]=layer_id;
+                this.map?.setLayoutProperty(layer_id, 'visibility', 'none');
+            }
+            const checkboxes: NodeListOf<HTMLElement> = document.getElementsByName(layer_id);
+            for (let i in checkboxes){
+                if (typeof checkboxes[i] === 'number') continue;
+                // @ts-ignore
+                checkboxes[i].checked = checked;
+            }
         }
     }
 
@@ -128,7 +130,7 @@ export default class MapboxLegendControl implements IControl
 
         checklayer.addEventListener('click', function(e){
             // @ts-ignore
-            const _id = e.target?.value;
+            const _id = `${e.target?.value}-outline`;
             // @ts-ignore
             const _checked = e.target?.checked;
             this_.changeLayerVisibility(_id, _checked);
