@@ -17,12 +17,16 @@ export type RasterLayerOpts = {
   rangeMin: number;
   rangeMax: number; // TODO: will this work for inf/nan?
   colorRamp: string; // the custom color ramp passed to titiler
+  horizontalRamp: string; // the URL to the titiler color ramp
+  verticalRamp: string; // the URL to the titiler color ramp
   units: string;
 };
 
 export type VectorLayerOpts = {
   label: string;
 };
+
+const TITILER_URL: string = "https://titiler-897938321824.us-west1.run.app";
 
 /**
  * Mapbox GL Legend Control.
@@ -161,12 +165,15 @@ export default class MapboxLegendControl implements IControl {
     const [min, max] = queryParams.rescale.split(",");
 
     //TODO: support custom JSON color ramps with linear interpolation
+    const colorRamp: string = queryParams.colormap_name;
     const options: RasterLayerOpts = {
       label: "foo",
       rangeMin: parseFloat(min),
       rangeMax: parseFloat(max),
-      colorRamp: queryParams.colormap_name,
-      units: "",
+      colorRamp: colorRamp,
+      horizontalRamp: `${TITILER_URL}/colorMaps/${colorRamp}?format=png&orientation=horizontal&height=20&width=80`,
+      verticalRamp: `${TITILER_URL}/colorMaps/${colorRamp}?format=png&orientation=vertical&height=100&width=20`,
+      units: "unknown",
     };
     return options;
   }
