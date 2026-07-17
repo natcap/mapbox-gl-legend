@@ -27,6 +27,7 @@ export type VectorLayerOpts = {
 };
 
 const TITILER_URL: string = "https://titiler-897938321824.us-west1.run.app";
+const LOCAL_TITILER: string = "http://localhost:8003";
 
 /**
  * Mapbox GL Legend Control.
@@ -148,7 +149,7 @@ export default class MapboxLegendControl implements IControl {
    */
   private getRasterStyleData(layer: mapboxgl.Layer): RasterLayerOpts | undefined {
     if (layer.type !== "raster") {
-      console.error("Layer is not a raster: " + layer);
+      console.error("Layer is not a raster: ", layer);
       return;
     }
     const map = this.map;
@@ -164,17 +165,32 @@ export default class MapboxLegendControl implements IControl {
     console.log(queryParams);
     const [min, max] = queryParams.rescale.split(",");
 
-    //TODO: support custom JSON color ramps with linear interpolation
-    const colorRamp: string = queryParams.colormap_name;
-    const options: RasterLayerOpts = {
-      label: "foo",
-      rangeMin: parseFloat(min),
-      rangeMax: parseFloat(max),
-      colorRamp: colorRamp,
-      horizontalRamp: `${TITILER_URL}/colorMaps/${colorRamp}?format=png&orientation=horizontal&height=20&width=60`,
-      verticalRamp: `${TITILER_URL}/colorMaps/${colorRamp}?format=png&orientation=vertical&height=100&width=20`,
-      units: "unknown",
-    };
+    let options: RasterLayerOpts;
+    if (queryParams.colormap_type === "linear") {
+      // Handle linear interpolation separately.
+      // The request has different json parameters relative to normal color ramps.
+      const colormap = encodeURIComponent(queryParams.colormap);
+      options = {
+        label: "foo",
+        rangeMin: parseFloat(min),
+        rangeMax: parseFloat(max),
+        colorRamp: "custom",
+        horizontalRamp: `${LOCAL_TITILER}/colorMapCustom/?colormap=${colormap}&colormap_type=linear&format=png&orientation=horizontal&height=20&width=60`,
+        verticalRamp: `${LOCAL_TITILER}/colorMapCustom/?colormap=${colormap}&colormap_type=linear&format=png&orientation=vertical&height=100&width=20`,
+        units: "unknown",
+      };
+    } else {
+      const colorRamp: string = queryParams.colormap_name;
+      options = {
+        label: "foo",
+        rangeMin: parseFloat(min),
+        rangeMax: parseFloat(max),
+        colorRamp: colorRamp,
+        horizontalRamp: `${TITILER_URL}/colorMaps/${colorRamp}?format=png&orientation=horizontal&height=20&width=60`,
+        verticalRamp: `${TITILER_URL}/colorMaps/${colorRamp}?format=png&orientation=vertical&height=100&width=20`,
+        units: "unknown",
+      };
+    }
     return options;
   }
 
