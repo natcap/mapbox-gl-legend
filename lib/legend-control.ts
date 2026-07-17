@@ -208,18 +208,33 @@ export default class MapboxLegendControl implements IControl {
       if (rasterStyleInfo !== undefined) {
         // If we can parse the raster style info, then use it to render the color ramp image
         td1.style.backgroundImage = rasterStyleInfo.horizontalRamp;
+        const rampDiv = document.createElement("DIV");
         const rampImage = document.createElement("IMG") as HTMLImageElement;
+        const rampMinMaxDiv = document.createElement("DIV");
+        rampMinMaxDiv.style.float = "inline-end";
+        rampMinMaxDiv.style.display = "none";
+        const rampMin = document.createElement("SPAN");
+        rampMin.innerText = rasterStyleInfo.rangeMin.toString();
+        rampMin.style.paddingTop = "60px";
+        const rampMax = document.createElement("SPAN");
+        rampMax.innerText = rasterStyleInfo.rangeMax.toString();
+        rampDiv.appendChild(rampImage);
+        rampDiv.appendChild(rampMinMaxDiv);
+        rampMinMaxDiv.appendChild(rampMax);
+        rampMinMaxDiv.appendChild(rampMin);
         rampImage.src = rasterStyleInfo.horizontalRamp;
         rampImage.style.cursor = "pointer";
-        td1.appendChild(rampImage);
+        td1.appendChild(rampDiv);
         rampImage.addEventListener("click", function (e) {
           if (rampImage.src == rasterStyleInfo.horizontalRamp) {
             rampImage.src = rasterStyleInfo.verticalRamp;
             // The default vertical ramp has bright/high values on the bottom.  Flip so high values are up.
             rampImage.style.transform = "scaleY(-1)";
+            rampMinMaxDiv.style.display = "grid";
           } else {
             rampImage.src = rasterStyleInfo.horizontalRamp;
             rampImage.style.transform = "";
+            rampMinMaxDiv.style.display = "none";
           }
         });
       } else {
