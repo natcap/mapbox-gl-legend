@@ -171,7 +171,7 @@ export default class MapboxLegendControl implements IControl {
       rangeMin: parseFloat(min),
       rangeMax: parseFloat(max),
       colorRamp: colorRamp,
-      horizontalRamp: `${TITILER_URL}/colorMaps/${colorRamp}?format=png&orientation=horizontal&height=20&width=80`,
+      horizontalRamp: `${TITILER_URL}/colorMaps/${colorRamp}?format=png&orientation=horizontal&height=20&width=60`,
       verticalRamp: `${TITILER_URL}/colorMaps/${colorRamp}?format=png&orientation=vertical&height=100&width=20`,
       units: "unknown",
     };
@@ -202,42 +202,54 @@ export default class MapboxLegendControl implements IControl {
     td1.className = "legend-table-td";
 
     if (!symbol) {
-      const iconSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-      const iconPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
-      const iconPath2 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      // raster
 
-      iconSvg.setAttribute("fill", "none");
-      iconSvg.setAttribute("viewBox", "0 0 24 24");
-      iconSvg.setAttribute("stroke", "black");
-      iconSvg.classList.add("post-icon");
-
-      iconPath.setAttribute(
-        "d",
-        "M21,0H3A3,3,0,0,0,0,3V21a3,3,0,0,0,3,3H21a3,3,0,0,0,3-3V3A3,3,0,0,0,21,0ZM3,2H21a1,1,0,0,1,1,1V15.86L14.18,9.35a5.06,5.06,0,0,0-6.39-.06L2,13.92V3A1,1,0,0,1,3,2ZM21,22H3a1,1,0,0,1-1-1V16.48l7-5.63a3.06,3.06,0,0,1,3.86,0L22,18.47V21A1,1,0,0,1,21,22Z",
-      );
-
-      iconPath.setAttribute("stroke-linecap", "round");
-      iconPath.setAttribute("stroke-linejoin", "round");
-      iconPath.setAttribute("stroke-width", "2");
-
-      iconPath2.setAttribute(
-        "d",
-        "M18,9a3,3,0,1,0-3-3A3,3,0,0,0,18,9Zm0-4a1,1,0,1,1-1,1A1,1,0,0,1,18,5Z",
-      );
-      iconPath2.setAttribute("stroke-linecap", "round");
-      iconPath2.setAttribute("stroke-linejoin", "round");
-      iconPath2.setAttribute("stroke-width", "2");
-
-      iconSvg.appendChild(iconPath);
-      iconSvg.appendChild(iconPath2);
-
-      var label2 = document.createElement("label");
-      if (this.targets && this.targets[layer.id]) {
-        label2.textContent = this.targets[layer.id]["label"];
+      const rasterStyleInfo: RasterLayerOpts | undefined = this.getRasterStyleData(layer);
+      if (rasterStyleInfo !== undefined) {
+        // If we can parse the raster style info, then use it to render the color ramp image
+        td1.style.backgroundImage = rasterStyleInfo.horizontalRamp;
+        const rampImage = document.createElement("IMG") as HTMLImageElement;
+        rampImage.src = rasterStyleInfo.horizontalRamp;
+        td1.appendChild(rampImage);
       } else {
-        label2.textContent = layer.id;
+        // If no style info can be parsed, fall back to the standard SVG
+        const iconSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        const iconPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        const iconPath2 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+
+        iconSvg.setAttribute("fill", "none");
+        iconSvg.setAttribute("viewBox", "0 0 24 24");
+        iconSvg.setAttribute("stroke", "black");
+        iconSvg.classList.add("post-icon");
+
+        iconPath.setAttribute(
+          "d",
+          "M21,0H3A3,3,0,0,0,0,3V21a3,3,0,0,0,3,3H21a3,3,0,0,0,3-3V3A3,3,0,0,0,21,0ZM3,2H21a1,1,0,0,1,1,1V15.86L14.18,9.35a5.06,5.06,0,0,0-6.39-.06L2,13.92V3A1,1,0,0,1,3,2ZM21,22H3a1,1,0,0,1-1-1V16.48l7-5.63a3.06,3.06,0,0,1,3.86,0L22,18.47V21A1,1,0,0,1,21,22Z",
+        );
+
+        iconPath.setAttribute("stroke-linecap", "round");
+        iconPath.setAttribute("stroke-linejoin", "round");
+        iconPath.setAttribute("stroke-width", "2");
+
+        iconPath2.setAttribute(
+          "d",
+          "M18,9a3,3,0,1,0-3-3A3,3,0,0,0,18,9Zm0-4a1,1,0,1,1-1,1A1,1,0,0,1,18,5Z",
+        );
+        iconPath2.setAttribute("stroke-linecap", "round");
+        iconPath2.setAttribute("stroke-linejoin", "round");
+        iconPath2.setAttribute("stroke-width", "2");
+
+        iconSvg.appendChild(iconPath);
+        iconSvg.appendChild(iconPath2);
+
+        var label2 = document.createElement("label");
+        if (this.targets && this.targets[layer.id]) {
+          label2.textContent = this.targets[layer.id]["label"];
+        } else {
+          label2.textContent = layer.id;
+        }
+        td1.appendChild(iconSvg);
       }
-      td1.appendChild(iconSvg);
     } else {
       switch (symbol.element) {
         case "div":
