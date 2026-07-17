@@ -166,17 +166,18 @@ export default class MapboxLegendControl implements IControl {
     const [min, max] = queryParams.rescale.split(",");
 
     let options: RasterLayerOpts;
-    if (queryParams.colormap_type === "linear") {
-      // Handle linear interpolation separately.
-      // The request has different json parameters relative to normal color ramps.
+    if (queryParams.colormap_type !== undefined) {
+      // Handle linear interpolation and "explicit" colormaps.
+      // The request has different json parameters relative to predefined color ramps.
       const colormap = encodeURIComponent(queryParams.colormap);
+      const colormap_type = queryParams.colormap_type; // linear or explicit
       options = {
         label: "foo",
         rangeMin: parseFloat(min),
         rangeMax: parseFloat(max),
         colorRamp: "custom",
-        horizontalRamp: `${LOCAL_TITILER}/colorMapCustom/?colormap=${colormap}&colormap_type=linear&format=png&orientation=horizontal&height=20&width=60`,
-        verticalRamp: `${LOCAL_TITILER}/colorMapCustom/?colormap=${colormap}&colormap_type=linear&format=png&orientation=vertical&height=100&width=20`,
+        horizontalRamp: `${LOCAL_TITILER}/colorMapCustom/?colormap=${colormap}&colormap_type=${colormap_type}&format=png&orientation=horizontal&height=20&width=60`,
+        verticalRamp: `${LOCAL_TITILER}/colorMapCustom/?colormap=${colormap}&colormap_type=${colormap_type}&format=png&orientation=vertical&height=100&width=20`,
         units: "unknown",
       };
     } else {
