@@ -210,6 +210,7 @@ export default class MapboxLegendControl implements IControl {
         td1.style.backgroundImage = rasterStyleInfo.horizontalRamp;
         const rampImage = document.createElement("IMG") as HTMLImageElement;
         rampImage.src = rasterStyleInfo.horizontalRamp;
+        rampImage.style.cursor = "pointer";
         td1.appendChild(rampImage);
         rampImage.addEventListener("click", function (e) {
           if (rampImage.src == rasterStyleInfo.horizontalRamp) {
