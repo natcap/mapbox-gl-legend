@@ -32,10 +32,17 @@
       "minzoom": 5,
       "maxzoom": 15
     },
-    "radar-source": {
+    "koppen-geiger-source-rescaled": {
       "type": "raster",
       "tiles": [
         "https://titiler-897938321824.us-west1.run.app/cog/tiles/WebMercatorQuad/{z}/{x}/{y}@2x?colormap_name=viridis&bidx=1&url=https%3A%2F%2Fdata.naturalcapitalalliance.stanford.edu%2Fdownload%2Fglobal%2Fkoppen_geiger_climatezones%2Fkoppen_geiger_climatezones_1991_2020_1km.tif&rescale=1.0%2C30.0"
+      ],
+      "tileSize": 256
+    },
+    "koppen-geiger-source-json": {
+      "type": "raster",
+      "tiles": [
+        "https://titiler-897938321824.us-west1.run.app/cog/tiles/WebMercatorQuad/{z}/{x}/{y}@2x?url=https%3A%2F%2Fdata.naturalcapitalalliance.stanford.edu%2Fdownload%2Fglobal%2Fkoppen_geiger_climatezones%2Fkoppen_geiger_climatezones_1991_2020_1km.tif&bidx=1&format=webp&rescale=1%2C30&colormap=%7B%220%22%3A%5B75%2C171%2C57%2C50%5D%2C%2226%22%3A%5B0%2C143%2C95%2C255%5D%2C%22158%22%3A%5B0%2C100%2C110%2C255%5D%2C%22229%22%3A%5B28%2C58%2C109%2C255%5D%2C%22255%22%3A%5B39%2C0%2C59%2C255%5D%7D&colormap_type=linear"
       ],
       "tileSize": 256
     }
@@ -51,9 +58,17 @@
       }
     },
     {
-      "id": "radar-layer",
+      "id": "koppen-geiger-rescaled-layer",
       "type": "raster",
-      "source": "radar-source",
+      "source": "koppen-geiger-source-rescaled",
+      "paint": {
+        "raster-opacity": 0.85
+      }
+    },
+    {
+      "id": "koppen-geiger-json-layer",
+      "type": "raster",
+      "source": "koppen-geiger-source-json",
       "paint": {
         "raster-opacity": 0.85
       }
