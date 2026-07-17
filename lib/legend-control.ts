@@ -1,4 +1,4 @@
-import { accessToken, baseApiUrl, IControl, Map as MapboxMap } from "mapbox-gl";
+import { accessToken, baseApiUrl, IControl, Map as MapboxMap, RasterSource } from "mapbox-gl";
 import LegendSymbol from "@watergis/legend-symbol";
 import axios from "axios";
 
@@ -138,12 +138,49 @@ export default class MapboxLegendControl implements IControl {
   }
 
   /**
+   * Read key color ramp data from the raster style url
+   * @param layer mapboxgl.Layer object
+   * @returns RasterLayerOpts
+   */
+  private getRasterStyleData(layer: mapboxgl.Layer): RasterLayerOpts | undefined {
+    if (layer.type !== "raster") {
+      console.error("Layer is not a raster: " + layer);
+      return;
+    }
+    const map = this.map;
+
+    let source = <RasterSource>map?.getSource(<string>layer.source);
+    let tiles = source?.tiles;
+    if (tiles === undefined || tiles.length == 0) {
+      console.error("Tiles for layer are undefined or length 0: " + layer);
+      return;
+    }
+    const tilesUrl = new URL(tiles[0]);
+    const queryParams = Object.fromEntries(tilesUrl.searchParams.entries());
+    console.log(queryParams);
+    const [min, max] = queryParams.rescale.split(",");
+
+    //TODO: support custom JSON color ramps with linear interpolation
+    const options: RasterLayerOpts = {
+      label: "foo",
+      rangeMin: parseFloat(min),
+      rangeMax: parseFloat(max),
+      colorRamp: queryParams.colormap_name,
+      units: "",
+    };
+    return options;
+  }
+
+  /**
    * Create and return a layer's legend row
    * @param layer mapboxgl.Layer object
    * @returns HTMLElement | undefined return TR Element
    */
   private getLayerLegend(layer: mapboxgl.Layer): HTMLElement | undefined {
     const map = this.map;
+    if (layer.type == "raster") {
+      console.log(this.getRasterStyleData(layer));
+    }
     const zoom = map?.getZoom();
     const sprite = this.sprite;
     let symbol = LegendSymbol({ sprite, zoom, layer });
