@@ -211,6 +211,16 @@ export default class MapboxLegendControl implements IControl {
         const rampImage = document.createElement("IMG") as HTMLImageElement;
         rampImage.src = rasterStyleInfo.horizontalRamp;
         td1.appendChild(rampImage);
+        rampImage.addEventListener("click", function (e) {
+          if (rampImage.src == rasterStyleInfo.horizontalRamp) {
+            rampImage.src = rasterStyleInfo.verticalRamp;
+            // The default vertical ramp has bright/high values on the bottom.  Flip so high values are up.
+            rampImage.style.transform = "scaleY(-1)";
+          } else {
+            rampImage.src = rasterStyleInfo.horizontalRamp;
+            rampImage.style.transform = "";
+          }
+        });
       } else {
         // If no style info can be parsed, fall back to the standard SVG
         const iconSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
