@@ -176,8 +176,8 @@ export default class MapboxLegendControl implements IControl {
         rangeMin: parseFloat(min),
         rangeMax: parseFloat(max),
         colorRamp: "custom",
-        horizontalRamp: `${LOCAL_TITILER}/colorMapCustom/?colormap=${colormap}&colormap_type=${colormap_type}&format=png&orientation=horizontal&height=20&width=60`,
-        verticalRamp: `${LOCAL_TITILER}/colorMapCustom/?colormap=${colormap}&colormap_type=${colormap_type}&format=png&orientation=vertical&height=100&width=20`,
+        horizontalRamp: `${TITILER_URL}/colorMapCustom/?colormap=${colormap}&colormap_type=${colormap_type}&format=png&orientation=horizontal&height=20&width=60`,
+        verticalRamp: `${TITILER_URL}/colorMapCustom/?colormap=${colormap}&colormap_type=${colormap_type}&format=png&orientation=vertical&height=100&width=20`,
         units: "unknown",
       };
     } else {
