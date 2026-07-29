@@ -27,7 +27,7 @@ export type VectorLayerOpts = {
 };
 
 const TITILER_URL: string = "https://titiler-897938321824.us-west1.run.app";
-const LOCAL_TITILER: string = "http://localhost:8003";
+//const LOCAL_TITILER: string = "http://localhost:8003";
 
 /**
  * Mapbox GL Legend Control.
