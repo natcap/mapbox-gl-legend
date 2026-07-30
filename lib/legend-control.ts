@@ -26,6 +26,7 @@ export type VectorLayerOpts = {
   label: string;
 };
 
+const LABEL_N_DIGITS = 2; // how many numeric digits to display in an expanded color ramp legend.
 const TITILER_URL: string = "https://titiler-897938321824.us-west1.run.app";
 //const LOCAL_TITILER: string = "http://localhost:8003";
 
@@ -231,10 +232,10 @@ export default class MapboxLegendControl implements IControl {
         rampMinMaxDiv.style.float = "inline-end";
         rampMinMaxDiv.style.display = "none";
         const rampMin = document.createElement("SPAN");
-        rampMin.innerText = rasterStyleInfo.rangeMin.toString();
+        rampMin.innerText = this.formatFloatUnitLabel(rasterStyleInfo.rangeMin);
         rampMin.style.paddingTop = "60px";
         const rampMax = document.createElement("SPAN");
-        rampMax.innerText = rasterStyleInfo.rangeMax.toString();
+        rampMax.innerText = this.formatFloatUnitLabel(rasterStyleInfo.rangeMax);
         rampDiv.appendChild(rampImage);
         rampDiv.appendChild(rampMinMaxDiv);
         rampMinMaxDiv.appendChild(rampMax);
@@ -573,5 +574,9 @@ export default class MapboxLegendControl implements IControl {
 
   private loadJson(url: string) {
     return axios.get(url, { responseType: "json" }).then((res) => res.data);
+  }
+
+  private formatFloatUnitLabel(units: number): string {
+    return units.toFixed(LABEL_N_DIGITS).toString();
   }
 }
